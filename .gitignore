@@ -43,3 +43,6 @@ next-env.d.ts
 # Service Account Keys
 serviceAccountKey.json
 *serviceAccount*.json
+
+# Archive
+archive/
