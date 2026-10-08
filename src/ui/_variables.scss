@@ -1,0 +1,77 @@
+@use "sass:map";
+
+// $background-color-light: #f0f0f0;
+// $foreground-color-light: #333;
+// $background-color-dark: #1a1a1a;
+// $foreground-color-dark: #f0f0f0;
+
+// $text-primary-light: #1C1C1C;
+// $text-secondary-light: #4A4A4A;
+// $text-primary-dark: #F9F9F9;
+// $text-secondary-dark: #C6C6C6;
+
+// $primary-color: #7400a1;
+
+// ─────────────────────────────────────────────────────────────
+// Raw palette — compile-time only. Never reference these from
+// a component; go through theme() so the value stays swappable.
+// ─────────────────────────────────────────────────────────────
+$background-light: #f0f0f0;
+$background-dark: #1a1a1a;
+
+$foreground-light: #333333;
+$foreground-dark: #f0f0f0;
+
+$surface-light: #ffffff;   // cards, panels — sits on top of background
+$surface-dark: #242424;
+
+$border-light: #d4d4d4;
+$border-dark: #3a3a3a;
+
+$text-primary-light: #1a1a1a;   // was `red` — placeholder, now a real value
+$text-primary-dark: #f9f9f9;
+
+$text-secondary-light: #4a4a4a;
+$text-secondary-dark: #c6c6c6;
+
+// ─────────────────────────────────────────────────────────────
+// Theme-agnostic — identical in both themes.
+// ─────────────────────────────────────────────────────────────
+$primary-color: #7400a1;
+$primary-color-hover: #8f1dc0;
+
+// ─────────────────────────────────────────────────────────────
+// Token maps. Each key becomes one CSS custom property.
+// Both maps MUST have an identical key set (asserted below).
+// ─────────────────────────────────────────────────────────────
+$light-theme: (
+  "background": $background-light,
+  "foreground": $foreground-light,
+  "surface": $surface-light,
+  "border": $border-light,
+  "text-primary": $text-primary-light,
+  "text-secondary": $text-secondary-light,
+);
+
+$dark-theme: (
+  "background": $background-dark,
+  "foreground": $foreground-dark,
+  "surface": $surface-dark,
+  "border": $border-dark,
+  "text-primary": $text-primary-dark,
+  "text-secondary": $text-secondary-dark,
+);
+
+// Build-time guard: a token present in one theme but not the other
+// would render as an unresolvable var() in that theme.
+@each $key, $_ in $light-theme {
+  @if not map.has-key($dark-theme, $key) {
+    @error "Theme token `#{$key}` exists in $light-theme but is missing from $dark-theme.";
+  }
+}
+
+@each $key, $_ in $dark-theme {
+  @if not map.has-key($light-theme, $key) {
+    @error "Theme token `#{$key}` exists in $dark-theme but is missing from $light-theme.";
+  }
+}

@@ -8,11 +8,17 @@ export default async function Projects() {
   return (
     <div>
       <h1>Projects</h1>
-      <ul>
+      <div>
+        {projects.length === 0 && <p>No projects found.</p>}
+        {projects.length > 0 && <p> {projects.length} projects.</p>}
+      </div>
+
+      <h2>Projects</h2>
+      <div>
         {projects.map((project) => (
           <ProjectCard key={project.id} project={project} />
         ))}
-      </ul>
+      </div>
     </div>
   )
 }

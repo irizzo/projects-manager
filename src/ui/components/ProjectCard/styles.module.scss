@@ -1,0 +1,19 @@
+@use "theme" as t;
+
+.card {
+  padding: 1rem 1.25rem;
+  border: 1px solid t.theme("border");
+  border-radius: 0.5rem;
+  background-color: t.theme("surface");
+}
+
+.title {
+  margin-bottom: 0.25rem;
+  color: t.theme("text-primary");
+  font-size: 1.125rem;
+}
+
+.meta {
+  color: t.theme("text-secondary");
+  font-size: 0.8125rem;
+}

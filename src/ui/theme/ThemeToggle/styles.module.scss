@@ -1,0 +1,36 @@
+// src/ui/theme/ThemeToggle/styles.module.scss
+@use "theme" as t;
+
+.toggle,
+.placeholder {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 1.125rem;
+  line-height: 1;
+  cursor: pointer;
+
+  background-color: t.theme("surface");
+  color: t.theme("text-primary");
+  border: 1px solid t.theme("border");
+  border-radius: 50%;
+
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+
+  &:hover {
+    border-color: var(--primary);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+}

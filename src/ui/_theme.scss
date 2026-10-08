@@ -1,0 +1,20 @@
+@use "sass:map";
+@use "variables" as v;
+
+/// Emits one custom property per entry in $map.
+/// Call inside a selector (`:root`, `[data-theme="dark"]`, …).
+@mixin emit-vars($map) {
+  @each $name, $value in $map {
+    --#{$name}: #{$value};
+  }
+}
+
+/// Resolves a token name to var(--token).
+/// Unknown names fail the build rather than producing dead CSS.
+@function theme($name) {
+  @if not map.has-key(v.$light-theme, $name) {
+    @error "Unknown theme token `#{$name}`. Available tokens: #{map.keys(v.$light-theme)}.";
+  }
+
+  @return var(--#{$name});
+}

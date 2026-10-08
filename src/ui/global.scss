@@ -1,0 +1,88 @@
+@use "theme" as t;
+@use "variables" as v;
+
+// ── Light (default) ──────────────────────────────────────────
+:root {
+  color-scheme: light;
+  @include t.emit-vars(v.$light-theme);
+
+  // Theme-agnostic tokens
+  --primary: #{v.$primary-color};
+  --primary-hover: #{v.$primary-color-hover};
+}
+
+// ── Dark ─────────────────────────────────────────────────────
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  @include t.emit-vars(v.$dark-theme);
+}
+
+// ── No-JS fallback ───────────────────────────────────────────
+// The init script (Step 5) always writes a concrete data-theme,
+// so this only applies when JS is disabled and the attribute is
+// absent. `:not([data-theme])` can never collide with the rules
+// above, which keeps us out of specificity-tie territory.
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+    @include t.emit-vars(v.$dark-theme);
+  }
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+html,
+body {
+  min-width: 100vw;
+  max-width: 100vw;
+  min-height: 100vh;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  background-color: t.theme("background");
+  color: t.theme("text-primary");
+}
+
+
+// * {
+//   box-sizing: border-box;
+//   padding: 0;
+//   margin: 0;
+// }
+
+// a {
+//   color: inherit;
+//   text-decoration: none;
+// }
+
+// html,
+// body {
+//   min-width: 100vw;
+//   max-width: 100vw;
+//   min-height: 100vh;
+//   max-height: 100vh;
+//   // overflow-x: hidden;
+// }
+
+// body {
+//   display: flex;
+//   flex-direction: column;
+//   font-family: Verdana, Geneva, Tahoma, sans-serif;
+//   -webkit-font-smoothing: antialiased;
+//   -moz-osx-font-smoothing: grayscale;
+// }
